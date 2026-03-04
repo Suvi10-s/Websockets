@@ -89,7 +89,6 @@ async def websocket_endpoint(websocket:WebSocket,user_id:str):
             receiver_id=message["receiver_id"]
             message_text=message["message"]
             data={'user_id':user_id,'receiver_id':receiver_id,'message':message_text}
-            data.pop("_id",None)
             await messages_collection.insert_one(data)
             await manager.private_chat(user_id=data['user_id'],receiver_id=data['receiver_id'],message=data['message'])
     except WebSocketDisconnect:
